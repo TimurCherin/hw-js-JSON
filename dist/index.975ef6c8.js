@@ -585,12 +585,53 @@ var _studentsJsonDefault = parcelHelpers.interopDefault(_studentsJson);
 var _templateHbs = require("./template.hbs");
 var _templateHbsDefault = parcelHelpers.interopDefault(_templateHbs);
 const wrap = document.querySelector(".wrap");
-wrap.innerHTML = (0, _templateHbsDefault.default)({
-    students: (0, _studentsJsonDefault.default)
-});
+function markup(students) {
+    wrap.innerHTML = (0, _templateHbsDefault.default)({
+        students
+    });
+}
+markup((0, _studentsJsonDefault.default));
+const form = document.querySelector(".form");
+const input = document.querySelectorAll(".input");
+const btn = document.querySelector(".btn");
+form.addEventListener("submit", onSubmit);
+function onSubmit(e) {
+    e.preventDefault();
+    const data = e.currentTarget.elements;
+    const firstName = data.firstName.value;
+    const secondName = data.secondName.value;
+    const age = data.age.value;
+    const course = data.course.value;
+    const faculty = data.faculty.value;
+    const afterSchoolCourse = data.afterSchoolCourse.value;
+    const newStudent = {
+        id: 3,
+        firstName: firstName,
+        secondName: secondName,
+        age: age,
+        course: course,
+        faculty: faculty,
+        afterSchoolCourse: [
+            afterSchoolCourse
+        ]
+    };
+    (0, _studentsJsonDefault.default).push(newStudent);
+    markup((0, _studentsJsonDefault.default));
+}
+const deleteBtn = document.querySelector(".del");
+deleteBtn.addEventListener("click", onDel);
+function onDel(e) {
+    (0, _studentsJsonDefault.default)[0].firstName = "";
+    (0, _studentsJsonDefault.default)[0].secondName = "";
+    (0, _studentsJsonDefault.default)[0].age = "";
+    (0, _studentsJsonDefault.default)[0].course = "";
+    (0, _studentsJsonDefault.default)[0].faculty = "";
+    (0, _studentsJsonDefault.default)[0].afterSchoolCourse = "";
+    markup((0, _studentsJsonDefault.default));
+}
 
 },{"./students.json":"lt9Ad","./template.hbs":"jb7YO","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"lt9Ad":[function(require,module,exports) {
-module.exports = JSON.parse('{"firstName":"Mark","secondName":"Salon","age":19,"course":2,"faculty":"legal","afterSchoolCourse":"Chess"}');
+module.exports = JSON.parse('[{"id":1,"firstName":"Mark","secondName":"Salon","age":19,"course":2,"faculty":"legal","afterSchoolCourse":["Chess","swiming","box"]},{"id":2,"firstName":"Agus","secondName":"Noson","age":21,"course":4,"faculty":"it","afterSchoolCourse":["resling","cooking","programing"]}]');
 
 },{}],"jb7YO":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -599,7 +640,7 @@ var _handlebars = require("handlebars");
 var _handlebarsDefault = parcelHelpers.interopDefault(_handlebars);
 const templateFunction = (0, _handlebarsDefault.default).template({
     "1": function(container, depth0, helpers, partials, data) {
-        var helper, alias1 = depth0 != null ? depth0 : container.nullContext || {}, alias2 = container.hooks.helperMissing, alias3 = "function", alias4 = container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
+        var stack1, helper, alias1 = depth0 != null ? depth0 : container.nullContext || {}, alias2 = container.hooks.helperMissing, alias3 = "function", alias4 = container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
             if (Object.prototype.hasOwnProperty.call(parent, propertyName)) return parent[propertyName];
             return undefined;
         };
@@ -609,85 +650,90 @@ const templateFunction = (0, _handlebarsDefault.default).template({
             "data": data,
             "loc": {
                 "start": {
-                    "line": 15,
+                    "line": 16,
                     "column": 10
                 },
                 "end": {
-                    "line": 15,
+                    "line": 16,
                     "column": 23
                 }
             }
-        }) : helper)) + " " + alias4((helper = (helper = lookupProperty(helpers, "secondName") || (depth0 != null ? lookupProperty(depth0, "secondName") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
+        }) : helper)) + "</td>\r\n      <td>" + alias4((helper = (helper = lookupProperty(helpers, "secondName") || (depth0 != null ? lookupProperty(depth0, "secondName") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
             "name": "secondName",
             "hash": {},
             "data": data,
             "loc": {
                 "start": {
-                    "line": 15,
-                    "column": 24
+                    "line": 17,
+                    "column": 10
                 },
                 "end": {
-                    "line": 15,
-                    "column": 38
+                    "line": 17,
+                    "column": 24
                 }
             }
-        }) : helper)) + " " + alias4((helper = (helper = lookupProperty(helpers, "age") || (depth0 != null ? lookupProperty(depth0, "age") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
+        }) : helper)) + "</td>\r\n      <td>" + alias4((helper = (helper = lookupProperty(helpers, "age") || (depth0 != null ? lookupProperty(depth0, "age") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
             "name": "age",
             "hash": {},
             "data": data,
             "loc": {
                 "start": {
-                    "line": 15,
-                    "column": 39
+                    "line": 18,
+                    "column": 10
                 },
                 "end": {
-                    "line": 15,
-                    "column": 46
+                    "line": 18,
+                    "column": 17
                 }
             }
-        }) : helper)) + " " + alias4((helper = (helper = lookupProperty(helpers, "course") || (depth0 != null ? lookupProperty(depth0, "course") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
+        }) : helper)) + "</td>\r\n      <td>" + alias4((helper = (helper = lookupProperty(helpers, "course") || (depth0 != null ? lookupProperty(depth0, "course") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
             "name": "course",
             "hash": {},
             "data": data,
             "loc": {
                 "start": {
-                    "line": 15,
-                    "column": 47
+                    "line": 19,
+                    "column": 10
                 },
                 "end": {
-                    "line": 15,
-                    "column": 57
+                    "line": 19,
+                    "column": 20
                 }
             }
-        }) : helper)) + " " + alias4((helper = (helper = lookupProperty(helpers, "faculty") || (depth0 != null ? lookupProperty(depth0, "faculty") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
+        }) : helper)) + "</td>\r\n      <td>" + alias4((helper = (helper = lookupProperty(helpers, "faculty") || (depth0 != null ? lookupProperty(depth0, "faculty") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
             "name": "faculty",
             "hash": {},
             "data": data,
             "loc": {
                 "start": {
-                    "line": 15,
-                    "column": 58
+                    "line": 20,
+                    "column": 10
                 },
                 "end": {
-                    "line": 15,
-                    "column": 69
+                    "line": 20,
+                    "column": 21
                 }
             }
-        }) : helper)) + " " + alias4((helper = (helper = lookupProperty(helpers, "afterSchoolCourse") || (depth0 != null ? lookupProperty(depth0, "afterSchoolCourse") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
-            "name": "afterSchoolCourse",
+        }) : helper)) + "</td>\r\n      <td>" + ((stack1 = lookupProperty(helpers, "each").call(alias1, depth0 != null ? lookupProperty(depth0, "afterSchoolCourse") : depth0, {
+            "name": "each",
             "hash": {},
+            "fn": container.program(2, data, 0),
+            "inverse": container.noop,
             "data": data,
             "loc": {
                 "start": {
-                    "line": 15,
-                    "column": 70
+                    "line": 21,
+                    "column": 10
                 },
                 "end": {
-                    "line": 15,
-                    "column": 91
+                    "line": 23,
+                    "column": 17
                 }
             }
-        }) : helper)) + "</td>\r\n    </tr>\r\n";
+        })) != null ? stack1 : "") + '      </td>\r\n      <td><button>Edit</button><button class="del">Delete</button></td>\r\n    </tr>\r\n';
+    },
+    "2": function(container, depth0, helpers, partials, data) {
+        return "\r\n        <p>" + container.escapeExpression(container.lambda(depth0, depth0)) + "</p>\r\n";
     },
     "compiler": [
         8,
@@ -698,7 +744,7 @@ const templateFunction = (0, _handlebarsDefault.default).template({
             if (Object.prototype.hasOwnProperty.call(parent, propertyName)) return parent[propertyName];
             return undefined;
         };
-        return "     <table>\r\n  <thead>\r\n    <tr>\r\n      <th>firstName</th>\r\n      <th>secondName</th>\r\n      <th>age</th>\r\n      <th>course</th>\r\n      <th>faculty</th>\r\n      <th>afterSchoolCourse</th>\r\n    </tr>\r\n  </thead>\r\n  <tbody>\r\n" + ((stack1 = lookupProperty(helpers, "each").call(depth0 != null ? depth0 : container.nullContext || {}, depth0 != null ? lookupProperty(depth0, "students") : depth0, {
+        return "    <table>\r\n  <thead>\r\n    <tr>\r\n      <th>firstName</th>\r\n      <th>secondName</th>\r\n      <th>age</th>\r\n      <th>course</th>\r\n      <th>faculty</th>\r\n      <th>afterSchoolCourse</th>\r\n      <th>setings</th>\r\n    </tr>\r\n  </thead>\r\n  <tbody>\r\n" + ((stack1 = lookupProperty(helpers, "each").call(depth0 != null ? depth0 : container.nullContext || {}, depth0 != null ? lookupProperty(depth0, "students") : depth0, {
             "name": "each",
             "hash": {},
             "fn": container.program(1, data, 0),
@@ -706,11 +752,11 @@ const templateFunction = (0, _handlebarsDefault.default).template({
             "data": data,
             "loc": {
                 "start": {
-                    "line": 13,
+                    "line": 14,
                     "column": 4
                 },
                 "end": {
-                    "line": 17,
+                    "line": 27,
                     "column": 13
                 }
             }

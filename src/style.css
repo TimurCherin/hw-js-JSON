@@ -1,10 +1,22 @@
 table,
 td {
-  border: 1px solid #333;
+  border: 1px solid skyblue;
 }
 
 thead,
 tfoot {
-  background-color: #333;
+  background-color: green;
   color: #fff;
+}
+.form {
+  width: 200px;
+}
+.btn {
+  background-color: green;
+  color: #fff;
+  border-color: skyblue;
+  border-radius: 50;
+  width: 50px;
+  height: 20px;
+
 }

@@ -1,4 +1,4 @@
-     <table>
+    <table>
   <thead>
     <tr>
       <th>firstName</th>
@@ -7,12 +7,22 @@
       <th>course</th>
       <th>faculty</th>
       <th>afterSchoolCourse</th>
+      <th>setings</th>
     </tr>
   </thead>
   <tbody>
     {{#each students}}
     <tr>
-      <td>{{firstName}} {{secondName}} {{age}} {{course}} {{faculty}} {{afterSchoolCourse}}</td>
+      <td>{{firstName}}</td>
+      <td>{{secondName}}</td>
+      <td>{{age}}</td>
+      <td>{{course}}</td>
+      <td>{{faculty}}</td>
+      <td>{{#each afterSchoolCourse}}
+        <p>{{this}}</p>
+        {{/each}}
+      </td>
+      <td><button>Edit</button><button class="del">Delete</button></td>
     </tr>
     {{/each}}
   </tbody>
