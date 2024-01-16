@@ -31,13 +31,12 @@ function onSubmit(e) {
     markup(students)
 }
 const deleteBtn = document.querySelector(".del")
-deleteBtn.addEventListener("click", onDel)
+const tbody = document.querySelector(".tbody")
+tbody.addEventListener("click", onDel)
 function onDel(e) {
-    students[0].firstName = ""
-    students[0].secondName = ""
-    students[0].age = ""
-    students[0].course = ""
-    students[0].faculty = ""
-    students[0].afterSchoolCourse = ""
-    markup(students)
+    if (e.target.nodeName === "BUTTON" && e.target.hasAttribute("data-delId")) {
+        const delId = e.target.dataset.delid
+        const filteredStudents = students.filter(student => student.id != delId)
+        markup(filteredStudents)
+    }
 }

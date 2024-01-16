@@ -10,7 +10,7 @@
       <th>setings</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody class="tbody">
     {{#each students}}
     <tr>
       <td>{{firstName}}</td>
@@ -22,7 +22,7 @@
         <p>{{this}}</p>
         {{/each}}
       </td>
-      <td><button>Edit</button><button class="del">Delete</button></td>
+      <td><button data-editId={{id}}>Edit</button><button data-delId={{id}} class="del">Delete</button></td>
     </tr>
     {{/each}}
   </tbody>

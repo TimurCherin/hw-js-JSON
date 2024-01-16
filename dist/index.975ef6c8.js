@@ -619,15 +619,14 @@ function onSubmit(e) {
     markup((0, _studentsJsonDefault.default));
 }
 const deleteBtn = document.querySelector(".del");
-deleteBtn.addEventListener("click", onDel);
+const tbody = document.querySelector(".tbody");
+tbody.addEventListener("click", onDel);
 function onDel(e) {
-    (0, _studentsJsonDefault.default)[0].firstName = "";
-    (0, _studentsJsonDefault.default)[0].secondName = "";
-    (0, _studentsJsonDefault.default)[0].age = "";
-    (0, _studentsJsonDefault.default)[0].course = "";
-    (0, _studentsJsonDefault.default)[0].faculty = "";
-    (0, _studentsJsonDefault.default)[0].afterSchoolCourse = "";
-    markup((0, _studentsJsonDefault.default));
+    if (e.target.nodeName === "BUTTON" && e.target.hasAttribute("data-delId")) {
+        const delId = e.target.dataset.delid;
+        const filteredStudents = (0, _studentsJsonDefault.default).filter((student)=>student.id != delId);
+        markup(filteredStudents);
+    }
 }
 
 },{"./students.json":"lt9Ad","./template.hbs":"jb7YO","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"lt9Ad":[function(require,module,exports) {
@@ -730,7 +729,35 @@ const templateFunction = (0, _handlebarsDefault.default).template({
                     "column": 17
                 }
             }
-        })) != null ? stack1 : "") + '      </td>\r\n      <td><button>Edit</button><button class="del">Delete</button></td>\r\n    </tr>\r\n';
+        })) != null ? stack1 : "") + "      </td>\r\n      <td><button data-editId=" + alias4((helper = (helper = lookupProperty(helpers, "id") || (depth0 != null ? lookupProperty(depth0, "id") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
+            "name": "id",
+            "hash": {},
+            "data": data,
+            "loc": {
+                "start": {
+                    "line": 25,
+                    "column": 30
+                },
+                "end": {
+                    "line": 25,
+                    "column": 36
+                }
+            }
+        }) : helper)) + ">Edit</button><button data-delId=" + alias4((helper = (helper = lookupProperty(helpers, "id") || (depth0 != null ? lookupProperty(depth0, "id") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
+            "name": "id",
+            "hash": {},
+            "data": data,
+            "loc": {
+                "start": {
+                    "line": 25,
+                    "column": 69
+                },
+                "end": {
+                    "line": 25,
+                    "column": 75
+                }
+            }
+        }) : helper)) + ' class="del">Delete</button></td>\r\n    </tr>\r\n';
     },
     "2": function(container, depth0, helpers, partials, data) {
         return "\r\n        <p>" + container.escapeExpression(container.lambda(depth0, depth0)) + "</p>\r\n";
@@ -744,7 +771,7 @@ const templateFunction = (0, _handlebarsDefault.default).template({
             if (Object.prototype.hasOwnProperty.call(parent, propertyName)) return parent[propertyName];
             return undefined;
         };
-        return "    <table>\r\n  <thead>\r\n    <tr>\r\n      <th>firstName</th>\r\n      <th>secondName</th>\r\n      <th>age</th>\r\n      <th>course</th>\r\n      <th>faculty</th>\r\n      <th>afterSchoolCourse</th>\r\n      <th>setings</th>\r\n    </tr>\r\n  </thead>\r\n  <tbody>\r\n" + ((stack1 = lookupProperty(helpers, "each").call(depth0 != null ? depth0 : container.nullContext || {}, depth0 != null ? lookupProperty(depth0, "students") : depth0, {
+        return '    <table>\r\n  <thead>\r\n    <tr>\r\n      <th>firstName</th>\r\n      <th>secondName</th>\r\n      <th>age</th>\r\n      <th>course</th>\r\n      <th>faculty</th>\r\n      <th>afterSchoolCourse</th>\r\n      <th>setings</th>\r\n    </tr>\r\n  </thead>\r\n  <tbody class="tbody">\r\n' + ((stack1 = lookupProperty(helpers, "each").call(depth0 != null ? depth0 : container.nullContext || {}, depth0 != null ? lookupProperty(depth0, "students") : depth0, {
             "name": "each",
             "hash": {},
             "fn": container.program(1, data, 0),
