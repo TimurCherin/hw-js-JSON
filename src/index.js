@@ -2,7 +2,9 @@ import students from "./students.json";
 import templateFunction from './template.hbs';
 const wrap = document.querySelector(".wrap")
 function markup(students) {
-    wrap.innerHTML = templateFunction({ students }); 
+    wrap.innerHTML = templateFunction({ students });
+    const tbody = document.querySelector(".tbody")
+    tbody.addEventListener("click", onDel)
 }
 markup(students)
 const form = document.querySelector(".form")
@@ -29,14 +31,13 @@ function onSubmit(e) {
     }
     students.push(newStudent)
     markup(students)
+    form.reset()
 }
-const deleteBtn = document.querySelector(".del")
-const tbody = document.querySelector(".tbody")
-tbody.addEventListener("click", onDel)
 function onDel(e) {
     if (e.target.nodeName === "BUTTON" && e.target.hasAttribute("data-delId")) {
         const delId = e.target.dataset.delid
-        const filteredStudents = students.filter(student => student.id != delId)
-        markup(filteredStudents)
+        const index = students.map(st => st.id.toString()).indexOf(delId)
+        students.splice(index, 1)
+        markup(students)
     }
 }

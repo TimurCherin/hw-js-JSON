@@ -589,6 +589,8 @@ function markup(students) {
     wrap.innerHTML = (0, _templateHbsDefault.default)({
         students
     });
+    const tbody = document.querySelector(".tbody");
+    tbody.addEventListener("click", onDel);
 }
 markup((0, _studentsJsonDefault.default));
 const form = document.querySelector(".form");
@@ -617,15 +619,14 @@ function onSubmit(e) {
     };
     (0, _studentsJsonDefault.default).push(newStudent);
     markup((0, _studentsJsonDefault.default));
+    form.reset();
 }
-const deleteBtn = document.querySelector(".del");
-const tbody = document.querySelector(".tbody");
-tbody.addEventListener("click", onDel);
 function onDel(e) {
     if (e.target.nodeName === "BUTTON" && e.target.hasAttribute("data-delId")) {
         const delId = e.target.dataset.delid;
-        const filteredStudents = (0, _studentsJsonDefault.default).filter((student)=>student.id != delId);
-        markup(filteredStudents);
+        const index = (0, _studentsJsonDefault.default).map((st)=>st.id.toString()).indexOf(delId);
+        (0, _studentsJsonDefault.default).splice(index, 1);
+        markup((0, _studentsJsonDefault.default));
     }
 }
 
