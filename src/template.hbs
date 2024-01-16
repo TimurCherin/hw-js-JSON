@@ -1,0 +1,19 @@
+     <table>
+  <thead>
+    <tr>
+      <th>firstName</th>
+      <th>secondName</th>
+      <th>age</th>
+      <th>course</th>
+      <th>faculty</th>
+      <th>afterSchoolCourse</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each students}}
+    <tr>
+      <td>{{firstName}} {{secondName}} {{age}} {{course}} {{faculty}} {{afterSchoolCourse}}</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
