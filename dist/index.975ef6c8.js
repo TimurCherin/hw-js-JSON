@@ -584,13 +584,18 @@ var _studentsJson = require("./students.json");
 var _studentsJsonDefault = parcelHelpers.interopDefault(_studentsJson);
 var _templateHbs = require("./template.hbs");
 var _templateHbsDefault = parcelHelpers.interopDefault(_templateHbs);
+var _nanoid = require("nanoid");
 const wrap = document.querySelector(".wrap");
+const closeBtn = document.querySelector(".close-btn");
+closeBtn.addEventListener("click", closeModal);
 function markup(students) {
     wrap.innerHTML = (0, _templateHbsDefault.default)({
         students
     });
     const tbody = document.querySelector(".tbody");
     tbody.addEventListener("click", onDel);
+    tbody.addEventListener("click", onEdit);
+    tbody.addEventListener("click", onEditAll);
 }
 markup((0, _studentsJsonDefault.default));
 const form = document.querySelector(".form");
@@ -607,15 +612,13 @@ function onSubmit(e) {
     const faculty = data.faculty.value;
     const afterSchoolCourse = data.afterSchoolCourse.value;
     const newStudent = {
-        id: 3,
+        id: (0, _nanoid.nanoid)(),
         firstName: firstName,
         secondName: secondName,
         age: age,
         course: course,
         faculty: faculty,
-        afterSchoolCourse: [
-            afterSchoolCourse
-        ]
+        afterSchoolCourse: afterSchoolCourse
     };
     (0, _studentsJsonDefault.default).push(newStudent);
     markup((0, _studentsJsonDefault.default));
@@ -629,9 +632,57 @@ function onDel(e) {
         markup((0, _studentsJsonDefault.default));
     }
 }
+const editBtn = document.querySelector(".edit");
+function onEdit(e) {
+    if (e.target.nodeName === "BUTTON" && e.target.hasAttribute("data-editId")) {
+        const editId = e.target.dataset.editid;
+        const editIndex = (0, _studentsJsonDefault.default).map((st)=>st.id.toString()).indexOf(editId);
+        const newName = prompt("Enter new name");
+        (0, _studentsJsonDefault.default)[editIndex].firstName = newName;
+        markup((0, _studentsJsonDefault.default));
+    }
+}
+const modal = document.querySelector(".backdrop");
+const modalForm = document.querySelector(".modal-form");
+const editAllBtn = document.querySelector(".edit-student");
+function onEditAll(e) {
+    if (e.target.nodeName === "BUTTON" && e.target.hasAttribute("data-editAllId")) {
+        const editId = e.target.dataset.editallid;
+        const editIndex = (0, _studentsJsonDefault.default).map((st)=>st.id.toString()).indexOf(editId);
+        modal.classList.remove("hide");
+        modalForm.addEventListener("submit", onEditStudent);
+        function onEditStudent(e) {
+            e.preventDefault();
+            const data = e.currentTarget.elements;
+            const firstName = data.firstName.value;
+            const secondName = data.secondName.value;
+            const age = data.age.value;
+            const course = data.course.value;
+            const faculty = data.faculty.value;
+            const afterSchoolCourse = data.afterSchoolCourse.value;
+            const newStudent = {};
+            firstName && (newStudent.firstName = firstName);
+            secondName && (newStudent.secondName = secondName);
+            age && (newStudent.age = age);
+            course && (newStudent.course = course);
+            faculty && (newStudent.faculty = faculty);
+            afterSchoolCourse && (newStudent.afterSchoolCourse = afterSchoolCourse);
+            (0, _studentsJsonDefault.default)[editIndex] = {
+                ...(0, _studentsJsonDefault.default)[editIndex],
+                ...newStudent
+            };
+            markup((0, _studentsJsonDefault.default));
+            modalForm.reset();
+            modal.classList.add("hide");
+        }
+    }
+}
+function closeModal() {
+    modal.classList.add("hide");
+}
 
-},{"./students.json":"lt9Ad","./template.hbs":"jb7YO","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"lt9Ad":[function(require,module,exports) {
-module.exports = JSON.parse('[{"id":1,"firstName":"Mark","secondName":"Salon","age":19,"course":2,"faculty":"legal","afterSchoolCourse":["Chess","swiming","box"]},{"id":2,"firstName":"Agus","secondName":"Noson","age":21,"course":4,"faculty":"it","afterSchoolCourse":["resling","cooking","programing"]}]');
+},{"./students.json":"lt9Ad","./template.hbs":"jb7YO","nanoid":"2ifus","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"lt9Ad":[function(require,module,exports) {
+module.exports = JSON.parse('[{"id":"1","firstName":"Mark","secondName":"Salon","age":19,"course":2,"faculty":"legal","afterSchoolCourse":"Chess"},{"id":"2","firstName":"Agus","secondName":"Noson","age":21,"course":4,"faculty":"it","afterSchoolCourse":"cooking"}]');
 
 },{}],"jb7YO":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -640,7 +691,7 @@ var _handlebars = require("handlebars");
 var _handlebarsDefault = parcelHelpers.interopDefault(_handlebars);
 const templateFunction = (0, _handlebarsDefault.default).template({
     "1": function(container, depth0, helpers, partials, data) {
-        var stack1, helper, alias1 = depth0 != null ? depth0 : container.nullContext || {}, alias2 = container.hooks.helperMissing, alias3 = "function", alias4 = container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
+        var helper, alias1 = depth0 != null ? depth0 : container.nullContext || {}, alias2 = container.hooks.helperMissing, alias3 = "function", alias4 = container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
             if (Object.prototype.hasOwnProperty.call(parent, propertyName)) return parent[propertyName];
             return undefined;
         };
@@ -714,11 +765,9 @@ const templateFunction = (0, _handlebarsDefault.default).template({
                     "column": 21
                 }
             }
-        }) : helper)) + "</td>\r\n      <td>" + ((stack1 = lookupProperty(helpers, "each").call(alias1, depth0 != null ? lookupProperty(depth0, "afterSchoolCourse") : depth0, {
-            "name": "each",
+        }) : helper)) + "</td>\r\n      <td>" + alias4((helper = (helper = lookupProperty(helpers, "afterSchoolCourse") || (depth0 != null ? lookupProperty(depth0, "afterSchoolCourse") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
+            "name": "afterSchoolCourse",
             "hash": {},
-            "fn": container.program(2, data, 0),
-            "inverse": container.noop,
             "data": data,
             "loc": {
                 "start": {
@@ -726,42 +775,53 @@ const templateFunction = (0, _handlebarsDefault.default).template({
                     "column": 10
                 },
                 "end": {
-                    "line": 23,
-                    "column": 17
+                    "line": 21,
+                    "column": 31
                 }
             }
-        })) != null ? stack1 : "") + "      </td>\r\n      <td><button data-editId=" + alias4((helper = (helper = lookupProperty(helpers, "id") || (depth0 != null ? lookupProperty(depth0, "id") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
+        }) : helper)) + "</td>\r\n      <td><button data-editAllId=" + alias4((helper = (helper = lookupProperty(helpers, "id") || (depth0 != null ? lookupProperty(depth0, "id") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
             "name": "id",
             "hash": {},
             "data": data,
             "loc": {
                 "start": {
-                    "line": 25,
-                    "column": 30
+                    "line": 22,
+                    "column": 33
                 },
                 "end": {
-                    "line": 25,
-                    "column": 36
+                    "line": 22,
+                    "column": 39
                 }
             }
-        }) : helper)) + ">Edit</button><button data-delId=" + alias4((helper = (helper = lookupProperty(helpers, "id") || (depth0 != null ? lookupProperty(depth0, "id") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
+        }) : helper)) + ' class="edit-student">Edit Student</button><button data-editId=' + alias4((helper = (helper = lookupProperty(helpers, "id") || (depth0 != null ? lookupProperty(depth0, "id") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
             "name": "id",
             "hash": {},
             "data": data,
             "loc": {
                 "start": {
-                    "line": 25,
-                    "column": 69
+                    "line": 22,
+                    "column": 102
                 },
                 "end": {
-                    "line": 25,
-                    "column": 75
+                    "line": 22,
+                    "column": 108
+                }
+            }
+        }) : helper)) + ' class="edit">Edit</button><button data-delId=' + alias4((helper = (helper = lookupProperty(helpers, "id") || (depth0 != null ? lookupProperty(depth0, "id") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
+            "name": "id",
+            "hash": {},
+            "data": data,
+            "loc": {
+                "start": {
+                    "line": 22,
+                    "column": 154
+                },
+                "end": {
+                    "line": 22,
+                    "column": 160
                 }
             }
         }) : helper)) + ' class="del">Delete</button></td>\r\n    </tr>\r\n';
-    },
-    "2": function(container, depth0, helpers, partials, data) {
-        return "\r\n        <p>" + container.escapeExpression(container.lambda(depth0, depth0)) + "</p>\r\n";
     },
     "compiler": [
         8,
@@ -784,7 +844,7 @@ const templateFunction = (0, _handlebarsDefault.default).template({
                     "column": 4
                 },
                 "end": {
-                    "line": 27,
+                    "line": 24,
                     "column": 13
                 }
             }
@@ -11996,6 +12056,41 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}]},["4rkIz","8lqZg"], "8lqZg", "parcelRequire94c2")
+},{}],"2ifus":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "urlAlphabet", ()=>(0, _indexJs.urlAlphabet));
+parcelHelpers.export(exports, "random", ()=>random);
+parcelHelpers.export(exports, "customRandom", ()=>customRandom);
+parcelHelpers.export(exports, "customAlphabet", ()=>customAlphabet);
+parcelHelpers.export(exports, "nanoid", ()=>nanoid);
+var _indexJs = require("./url-alphabet/index.js");
+let random = (bytes)=>crypto.getRandomValues(new Uint8Array(bytes));
+let customRandom = (alphabet, defaultSize, getRandom)=>{
+    let mask = (2 << Math.log(alphabet.length - 1) / Math.LN2) - 1;
+    let step = -~(1.6 * mask * defaultSize / alphabet.length);
+    return (size = defaultSize)=>{
+        let id = "";
+        while(true){
+            let bytes = getRandom(step);
+            let j = step;
+            while(j--){
+                id += alphabet[bytes[j] & mask] || "";
+                if (id.length === size) return id;
+            }
+        }
+    };
+};
+let customAlphabet = (alphabet, size = 21)=>customRandom(alphabet, size, random);
+let nanoid = (size = 21)=>crypto.getRandomValues(new Uint8Array(size)).reduce((id, byte)=>{
+        byte &= 63;
+        if (byte < 36) id += byte.toString(36);
+        else if (byte < 62) id += (byte - 26).toString(36).toUpperCase();
+        else if (byte > 62) id += "-";
+        else id += "_";
+        return id;
+    }, "");
+
+},{"./url-alphabet/index.js":false,"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["4rkIz","8lqZg"], "8lqZg", "parcelRequire94c2")
 
 //# sourceMappingURL=index.975ef6c8.js.map

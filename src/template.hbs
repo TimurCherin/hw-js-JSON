@@ -18,11 +18,8 @@
       <td>{{age}}</td>
       <td>{{course}}</td>
       <td>{{faculty}}</td>
-      <td>{{#each afterSchoolCourse}}
-        <p>{{this}}</p>
-        {{/each}}
-      </td>
-      <td><button data-editId={{id}}>Edit</button><button data-delId={{id}} class="del">Delete</button></td>
+      <td>{{afterSchoolCourse}}</td>
+      <td><button data-editAllId={{id}} class="edit-student">Edit Student</button><button data-editId={{id}} class="edit">Edit</button><button data-delId={{id}} class="del">Delete</button></td>
     </tr>
     {{/each}}
   </tbody>
