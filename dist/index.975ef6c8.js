@@ -579,12 +579,13 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 }
 
 },{}],"8lqZg":[function(require,module,exports) {
+// import students from "./students.json";
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-var _studentsJson = require("./students.json");
-var _studentsJsonDefault = parcelHelpers.interopDefault(_studentsJson);
 var _templateHbs = require("./template.hbs");
 var _templateHbsDefault = parcelHelpers.interopDefault(_templateHbs);
 var _nanoid = require("nanoid");
+let studentData = "[]";
+let students = JSON.parse(studentData);
 const wrap = document.querySelector(".wrap");
 const closeBtn = document.querySelector(".close-btn");
 closeBtn.addEventListener("click", closeModal);
@@ -597,7 +598,7 @@ function markup(students) {
     tbody.addEventListener("click", onEdit);
     tbody.addEventListener("click", onEditAll);
 }
-markup((0, _studentsJsonDefault.default));
+if (students.length) markup(students);
 const form = document.querySelector(".form");
 const input = document.querySelectorAll(".input");
 const btn = document.querySelector(".btn");
@@ -620,26 +621,33 @@ function onSubmit(e) {
         faculty: faculty,
         afterSchoolCourse: afterSchoolCourse
     };
-    (0, _studentsJsonDefault.default).push(newStudent);
-    markup((0, _studentsJsonDefault.default));
+    students = JSON.parse(studentData);
+    students.push(newStudent);
+    markup(students);
     form.reset();
+    studentData = JSON.stringify(students);
+    console.log(studentData);
 }
 function onDel(e) {
     if (e.target.nodeName === "BUTTON" && e.target.hasAttribute("data-delId")) {
         const delId = e.target.dataset.delid;
-        const index = (0, _studentsJsonDefault.default).map((st)=>st.id.toString()).indexOf(delId);
-        (0, _studentsJsonDefault.default).splice(index, 1);
-        markup((0, _studentsJsonDefault.default));
+        students = JSON.parse(studentData);
+        const index = students.map((st)=>st.id.toString()).indexOf(delId);
+        students.splice(index, 1);
+        markup(students);
+        studentData = JSON.stringify(students);
     }
 }
 const editBtn = document.querySelector(".edit");
 function onEdit(e) {
     if (e.target.nodeName === "BUTTON" && e.target.hasAttribute("data-editId")) {
         const editId = e.target.dataset.editid;
-        const editIndex = (0, _studentsJsonDefault.default).map((st)=>st.id.toString()).indexOf(editId);
+        students = JSON.parse(studentData);
+        const editIndex = students.map((st)=>st.id.toString()).indexOf(editId);
         const newName = prompt("Enter new name");
-        (0, _studentsJsonDefault.default)[editIndex].firstName = newName;
-        markup((0, _studentsJsonDefault.default));
+        students[editIndex].firstName = newName;
+        markup(students);
+        studentData = JSON.stringify(students);
     }
 }
 const modal = document.querySelector(".backdrop");
@@ -648,7 +656,8 @@ const editAllBtn = document.querySelector(".edit-student");
 function onEditAll(e) {
     if (e.target.nodeName === "BUTTON" && e.target.hasAttribute("data-editAllId")) {
         const editId = e.target.dataset.editallid;
-        const editIndex = (0, _studentsJsonDefault.default).map((st)=>st.id.toString()).indexOf(editId);
+        students = JSON.parse(studentData);
+        const editIndex = students.map((st)=>st.id.toString()).indexOf(editId);
         modal.classList.remove("hide");
         modalForm.addEventListener("submit", onEditStudent);
         function onEditStudent(e) {
@@ -667,13 +676,14 @@ function onEditAll(e) {
             course && (newStudent.course = course);
             faculty && (newStudent.faculty = faculty);
             afterSchoolCourse && (newStudent.afterSchoolCourse = afterSchoolCourse);
-            (0, _studentsJsonDefault.default)[editIndex] = {
-                ...(0, _studentsJsonDefault.default)[editIndex],
+            students[editIndex] = {
+                ...students[editIndex],
                 ...newStudent
             };
-            markup((0, _studentsJsonDefault.default));
+            markup(students);
             modalForm.reset();
             modal.classList.add("hide");
+            studentData = JSON.stringify(students);
         }
     }
 }
@@ -681,10 +691,7 @@ function closeModal() {
     modal.classList.add("hide");
 }
 
-},{"./students.json":"lt9Ad","./template.hbs":"jb7YO","nanoid":"2ifus","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"lt9Ad":[function(require,module,exports) {
-module.exports = JSON.parse('[{"id":"1","firstName":"Mark","secondName":"Salon","age":19,"course":2,"faculty":"legal","afterSchoolCourse":"Chess"},{"id":"2","firstName":"Agus","secondName":"Noson","age":21,"course":4,"faculty":"it","afterSchoolCourse":"cooking"}]');
-
-},{}],"jb7YO":[function(require,module,exports) {
+},{"./template.hbs":"jb7YO","nanoid":"2ifus","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jb7YO":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _handlebars = require("handlebars");
